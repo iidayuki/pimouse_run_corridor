@@ -8,7 +8,7 @@ class WallStop():
     def __int__(self):
         self.cmd_vel = rospy.Publisher('/cmd_vel',Twist,queue_size=1)
 
-        self.sensor_values = LightSenosrValues()
+        self.sensor_values = LightSensorValues()
         rospy.Subscriber('/lightsensors', LightSensorValues, self.callback)
 
     def callback(self,messages):
@@ -29,6 +29,5 @@ if __name__ == '__main__':
     rospy.wait_for_service('/motor_off')
     rospy.on_shutdown(rospy.ServiceProxy('/motor_off',Trigger).call)
     rospy.ServiceProxy('/motor_on',Trigger).call()
-    w = WallStop()
-    w.run()
+    WallStop().run()
 
